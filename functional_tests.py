@@ -43,21 +43,27 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
 
-        self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows),
-            "New to-do item did not appear in table"
-        )
+        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
 
         # Ainda existe um text box sugerindo a ela que adicione outro
         # item. Ela então digita "Use peacock feathers to make a fly".
-        self.fail("Finish the test!")
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Use peacock feathers to make a fly')
+        inputbox.send_keys(Keys.ENTER)
 
         # A página atualiza de novo, e agora ela tem dois items em sua
         # lista.
+        table = self.browser.find_element_by_id('id_list_table')
+        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+        self.assertIn(
+            '2: Use peacock feathers to make a fly',
+            [row.text for row in rows]
+        )
 
         # Edith se pergunta se o site vai se lembrar de sua lista.
         # Então ela nota que o site gerou uma URL única para ela.
         # -- Isto é mais um texto explicativo de um efeito.
+        self.fail("Finish the test!")
 
         # Ela visita aquela URL - sua lista de To-do's continua lá.
 
