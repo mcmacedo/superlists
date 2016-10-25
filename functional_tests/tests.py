@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import unittest
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome()
@@ -22,7 +22,7 @@ class NewVisitorTest(unittest.TestCase):
 
         # Edith ouviu falar sobre um novo app online muito legal.
         # Então ela foi dar uma olhada na homepage.
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # Ela notou que a página tem To-Do escrito na título e em seu
         # cabeçalho.
@@ -67,7 +67,3 @@ class NewVisitorTest(unittest.TestCase):
         # Ela visita aquela URL - sua lista de To-do's continua lá.
 
         # Satisfeita, ela vai dormir.
-
-
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
